@@ -217,17 +217,33 @@ const fetchProperties = async () => {
                {(p.images && p.images[0]) || p.image ? (
   <img
     src={
-      p.images && p.images[0]
+     {(p.images && p.images.length > 0) || p.image ? (
+  <img
+    src={
+      p.images && p.images.length > 0
         ? `/uploads/${p.images[0]}`
         : p.image
     }
     className="card-img-top"
     style={{
-      height: 230,
+      height: 220,
+      objectFit: "cover",
+      borderTopLeftRadius: "12px",
+      borderTopRightRadius: "12px"
+    }}
+    alt={p.title}
+  />
+) : (
+  <img
+    src="https://images.unsplash.com/photo-1560185007-c5ca9d2c014d?w=900"
+    className="card-img-top"
+    style={{
+      height: 220,
       objectFit: "cover"
     }}
     alt="property"
   />
+)}
 ) : (
                    <div
   className="card-body"
