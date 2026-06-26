@@ -216,9 +216,7 @@ const fetchProperties = async () => {
 
                {(p.images && p.images[0]) || p.image ? (
   <img
-    src={
-     {(p.images && p.images.length > 0) || p.image ? (
-  <img
+    
     src={
       p.images && p.images.length > 0
         ? `/uploads/${p.images[0]}`
