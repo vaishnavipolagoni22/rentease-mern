@@ -32,69 +32,137 @@ router.get("/", async (req, res) => {
     );
 
     if (properties.length === 0) {
-      properties = [
-        {
-          _id: "1",
-          title: "Luxury Apartment",
-          address: "Gachibowli, Hyderabad",
-          propertyType: "Apartment",
-          adType: "rent",
-          ownerContact: "9876543210",
-          amount: 25000,
-          availability: true,
-          image:
-            "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=900"
-        },
-        {
-          _id: "2",
-          title: "Royal Villa",
-          address: "Jubilee Hills, Hyderabad",
-          propertyType: "Villa",
-          adType: "rent",
-          ownerContact: "9988776655",
-          amount: 65000,
-          availability: true,
-          image:
-            "https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=900"
-        },
-        {
-          _id: "3",
-          title: "Sky Residency",
-          address: "Whitefield, Bangalore",
-          propertyType: "3 BHK",
-          adType: "rent",
-          ownerContact: "9123456789",
-          amount: 32000,
-          availability: true,
-          image:
-            "https://images.unsplash.com/photo-1494526585095-c41746248156?w=900"
-        },
-        {
-          _id: "4",
-          title: "Sunrise PG",
-          address: "Madhapur, Hyderabad",
-          propertyType: "PG",
-          adType: "rent",
-          ownerContact: "9000000000",
-          amount: 8000,
-          availability: true,
-          image:
-            "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=900"
-        },
-        {
-          _id: "5",
-          title: "Elite Homes",
-          address: "Anna Nagar, Chennai",
-          propertyType: "2 BHK",
-          adType: "rent",
-          ownerContact: "9012345678",
-          amount: 22000,
-          availability: true,
-          image:
-            "https://images.unsplash.com/photo-1484154218962-a197022b5858?w=900"
-        }
-      ];
-    }
+     properties = [
+{
+_id:"1",
+title:"Luxury Apartment",
+address:"Gachibowli, Hyderabad",
+propertyType:"Apartment",
+adType:"rent",
+ownerContact:"9876543210",
+amount:25000,
+availability:true,
+images:[
+"https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=900"
+]
+},
+{
+_id:"2",
+title:"Royal Villa",
+address:"Jubilee Hills, Hyderabad",
+propertyType:"Villa",
+adType:"rent",
+ownerContact:"9988776655",
+amount:65000,
+availability:true,
+images:[
+"https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=900"
+]
+},
+{
+_id:"3",
+title:"Sky Residency",
+address:"Whitefield, Bangalore",
+propertyType:"3 BHK Apartment",
+adType:"rent",
+ownerContact:"9123456789",
+amount:32000,
+availability:true,
+images:[
+"https://images.unsplash.com/photo-1494526585095-c41746248156?w=900"
+]
+},
+{
+_id:"4",
+title:"Sunrise PG",
+address:"Madhapur, Hyderabad",
+propertyType:"PG",
+adType:"rent",
+ownerContact:"9000000000",
+amount:8000,
+availability:true,
+images:[
+"https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=900"
+]
+},
+{
+_id:"5",
+title:"Elite Homes",
+address:"Anna Nagar, Chennai",
+propertyType:"2 BHK Apartment",
+adType:"rent",
+ownerContact:"9012345678",
+amount:22000,
+availability:true,
+images:[
+"https://images.unsplash.com/photo-1484154218962-a197022b5858?w=900"
+]
+},
+{
+_id:"6",
+title:"Green Meadows",
+address:"Kondapur, Hyderabad",
+propertyType:"Apartment",
+adType:"rent",
+ownerContact:"9988001122",
+amount:18000,
+availability:true,
+images:[
+"https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=900"
+]
+},
+{
+_id:"7",
+title:"Palm Residency",
+address:"HSR Layout, Bangalore",
+propertyType:"Villa",
+adType:"rent",
+ownerContact:"9988003344",
+amount:55000,
+availability:true,
+images:[
+"https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=900"
+]
+},
+{
+_id:"8",
+title:"Blue Sky Homes",
+address:"Ameerpet, Hyderabad",
+propertyType:"1 BHK",
+adType:"rent",
+ownerContact:"9988123456",
+amount:15000,
+availability:true,
+images:[
+"https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=900"
+]
+},
+{
+_id:"9",
+title:"Lake View Residency",
+address:"Miyapur, Hyderabad",
+propertyType:"2 BHK",
+adType:"rent",
+ownerContact:"9011111111",
+amount:20000,
+availability:true,
+images:[
+"https://images.unsplash.com/photo-1501183638710-841dd1904471?w=900"
+]
+},
+{
+_id:"10",
+title:"Golden Heights",
+address:"Vijayawada",
+propertyType:"Apartment",
+adType:"rent",
+ownerContact:"9002222222",
+amount:17000,
+availability:true,
+images:[
+"https://images.unsplash.com/photo-1460317442991-0ec209397118?w=900"
+]
+},
 
     res.json(properties);
 
