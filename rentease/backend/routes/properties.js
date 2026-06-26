@@ -10,23 +10,100 @@ const storage = multer.diskStorage({
   filename: (req, file, cb) => cb(null, Date.now() + path.extname(file.originalname))
 });
 const upload = multer({ storage });
-
 // Get all properties (public)
-router.get('/', async (req, res) => {
+router.get("/", async (req, res) => {
   try {
     const { address, adType, propertyType } = req.query;
-    const filter = {};
-    if (address) filter.address = { $regex: address, $options: 'i' };
-    if (adType) filter.adType = adType;
-    if (propertyType) filter.propertyType = propertyType;
 
-    const properties = await Property.find(filter).populate('owner', 'name email');
+    const filter = {};
+
+    if (address)
+      filter.address = { $regex: address, $options: "i" };
+
+    if (adType)
+      filter.adType = adType;
+
+    if (propertyType)
+      filter.propertyType = propertyType;
+
+    let properties = await Property.find(filter).populate(
+      "owner",
+      "name email"
+    );
+
+    if (properties.length === 0) {
+      properties = [
+        {
+          _id: "1",
+          title: "Luxury Apartment",
+          address: "Gachibowli, Hyderabad",
+          propertyType: "Apartment",
+          adType: "rent",
+          ownerContact: "9876543210",
+          amount: 25000,
+          availability: true,
+          image:
+            "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=900"
+        },
+        {
+          _id: "2",
+          title: "Royal Villa",
+          address: "Jubilee Hills, Hyderabad",
+          propertyType: "Villa",
+          adType: "rent",
+          ownerContact: "9988776655",
+          amount: 65000,
+          availability: true,
+          image:
+            "https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=900"
+        },
+        {
+          _id: "3",
+          title: "Sky Residency",
+          address: "Whitefield, Bangalore",
+          propertyType: "3 BHK",
+          adType: "rent",
+          ownerContact: "9123456789",
+          amount: 32000,
+          availability: true,
+          image:
+            "https://images.unsplash.com/photo-1494526585095-c41746248156?w=900"
+        },
+        {
+          _id: "4",
+          title: "Sunrise PG",
+          address: "Madhapur, Hyderabad",
+          propertyType: "PG",
+          adType: "rent",
+          ownerContact: "9000000000",
+          amount: 8000,
+          availability: true,
+          image:
+            "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=900"
+        },
+        {
+          _id: "5",
+          title: "Elite Homes",
+          address: "Anna Nagar, Chennai",
+          propertyType: "2 BHK",
+          adType: "rent",
+          ownerContact: "9012345678",
+          amount: 22000,
+          availability: true,
+          image:
+            "https://images.unsplash.com/photo-1484154218962-a197022b5858?w=900"
+        }
+      ];
+    }
+
     res.json(properties);
+
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    res.status(500).json({
+      message: err.message,
+    });
   }
 });
-
 // Get owner's properties
 router.get('/my', authMiddleware, ownerMiddleware, async (req, res) => {
   try {

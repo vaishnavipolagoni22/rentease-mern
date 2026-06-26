@@ -21,22 +21,89 @@ const RenterHome = () => {
   }, [tab]);
 
   // ✅ FIXED: safe response handling
-  const fetchProperties = async () => {
-    try {
-      const params = {};
-      if (search) params.address = search;
-      if (adType) params.adType = adType;
-      if (propType) params.propertyType = propType;
+const demoProperties = [
+  {
+    _id: "1",
+    title: "Luxury Apartment",
+    address: "Gachibowli, Hyderabad",
+    propertyType: "2 BHK Apartment",
+    adType: "Rent",
+    ownerContact: "91 9876543210",
+    availability: true,
+    amount: 25000,
+    image:
+      "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=800"
+  },
+  {
+    _id: "2",
+    title: "Royal Villa",
+    address: "Jubilee Hills, Hyderabad",
+    propertyType: "4 BHK Villa",
+    adType: "Rent",
+    ownerContact: "91 9123456789",
+    availability: true,
+    amount: 75000,
+    image:
+      "https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=800"
+  },
+  {
+    _id: "3",
+    title: "Green Residency",
+    address: "Whitefield, Bangalore",
+    propertyType: "3 BHK Apartment",
+    adType: "Rent",
+    ownerContact: "91 9988776655",
+    availability: true,
+    amount: 32000,
+    image:
+      "https://images.unsplash.com/photo-1494526585095-c41746248156?w=800"
+  },
+  {
+    _id: "4",
+    title: "Sunrise PG",
+    address: "Madhapur, Hyderabad",
+    propertyType: "PG",
+    adType: "Rent",
+    ownerContact: "91 9000000001",
+    availability: true,
+    amount: 8500,
+    image:
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800"
+  },
+  {
+    _id: "5",
+    title: "Elite Homes",
+    address: "Banjara Hills, Hyderabad",
+    propertyType: "3 BHK",
+    adType: "Rent",
+    ownerContact: "91 9555555555",
+    availability: true,
+    amount: 42000,
+    image:
+      "https://images.unsplash.com/photo-1484154218962-a197022b5858?w=800"
+  }
+];
 
-      const res = await API.get('/properties', { params });
+const fetchProperties = async () => {
+  try {
+    const params = {};
 
-      const data = Array.isArray(res.data) ? res.data : [];
-      setProperties(data);
-    } catch (err) {
-      console.log(err);
-      setProperties([]);
+    if (search) params.address = search;
+    if (adType) params.adType = adType;
+    if (propType) params.propertyType = propType;
+
+    const res = await API.get("/properties", { params });
+
+    if (Array.isArray(res.data) && res.data.length > 0) {
+      setProperties(res.data);
+    } else {
+      setProperties(demoProperties);
     }
-  };
+  } catch (err) {
+    console.log(err);
+    setProperties(demoProperties);
+  }
+};
 
   // ✅ FIXED: safe response handling
   const fetchBookings = async () => {
@@ -147,46 +214,102 @@ const RenterHome = () => {
                     style={{ backgroundColor: '#2a2a3e', color: 'white', border: 'none' }}
                   >
 
-                    {p.images && p.images[0] ? (
-                      <img
-                        src={`/uploads/${p.images[0]}`}
-                        className="card-img-top"
-                        style={{ height: 200, objectFit: 'cover' }}
-                        alt="property"
-                      />
-                    ) : (
-                      <div style={{ height: 200, background: '#444', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                        <span className="text-muted">No Image</span>
-                      </div>
-                    )}
+               {(p.images && p.images[0]) || p.image ? (
+  <img
+    src={
+      p.images && p.images[0]
+        ? `/uploads/${p.images[0]}`
+        : p.image
+    }
+    className="card-img-top"
+    style={{
+      height: 230,
+      objectFit: "cover"
+    }}
+    alt="property"
+  />
+) : (
+                   <div
+  className="card-body"
+  style={{
+    background: "linear-gradient(to bottom,#ffffff,#f8f9fa)",
+    color: "#222",
+    borderRadius: "0 0 15px 15px"
+  }}
+>
+  <div className="d-flex justify-content-between align-items-center mb-2">
+    <h5 className="fw-bold text-dark mb-0">
+      🏠 {p.title || "Premium Property"}
+    </h5>
 
-                    <div className="card-body">
-                      <p className="small fw-bold">{p.address}</p>
-                      <p className="small">{p.propertyType} - {p.adType}</p>
-                      <p className="small">Owner: +{p.ownerContact}</p>
+    <span
+      className={`badge ${
+        p.availability ? "bg-success" : "bg-danger"
+      }`}
+    >
+      {p.availability ? "Available" : "Booked"}
+    </span>
+  </div>
 
-                      <p className="small">
-                        Availability:{' '}
-                        <span className={`badge ${p.availability ? 'bg-success' : 'bg-danger'}`}>
-                          {p.availability ? 'Available' : 'Unavailable'}
-                        </span>
-                      </p>
+  <p className="text-primary mb-2">
+    📍 {p.address}
+  </p>
 
-                      <p className="fw-bold">Price: ₹{p.amount?.toLocaleString()}</p>
+  <div className="row mb-2">
+    <div className="col-6">
+      <small className="text-muted">Category</small>
+      <h6>{p.propertyType}</h6>
+    </div>
 
-                      {p.availability ? (
-                        <button
-                          className="btn btn-primary btn-sm w-100"
-                          onClick={() => { setBookingModal(p); setMsg(''); }}
-                        >
-                          Get Info / Book
-                        </button>
-                      ) : (
-                        <button className="btn btn-secondary btn-sm w-100" disabled>
-                          Not Available
-                        </button>
-                      )}
-                    </div>
+    <div className="col-6">
+      <small className="text-muted">Purpose</small>
+      <h6>{p.adType}</h6>
+    </div>
+  </div>
+
+  <div className="row mb-2">
+    <div className="col-6">
+      <small className="text-muted">Owner</small>
+      <h6>{p.ownerContact}</h6>
+    </div>
+
+    <div className="col-6">
+      <small className="text-muted">Rating</small>
+      <h6 className="text-warning">⭐⭐⭐⭐⭐</h6>
+    </div>
+  </div>
+
+  <div
+    className="d-flex justify-content-between align-items-center mt-3"
+  >
+    <div>
+      <small className="text-muted">Monthly Rent</small>
+
+      <h4
+        className="fw-bold"
+        style={{ color: "#0d6efd" }}
+      >
+        ₹{p.amount?.toLocaleString()}
+      </h4>
+    </div>
+
+    <button
+      className="btn btn-primary"
+      style={{
+        borderRadius: "12px",
+        padding: "10px 18px",
+        fontWeight: "bold"
+      }}
+      onClick={() => {
+        setBookingModal(p);
+        setMsg("");
+      }}
+      disabled={!p.availability}
+    >
+      {p.availability ? "🏡 Book Now" : "Unavailable"}
+    </button>
+  </div>
+</div>
                   </div>
                 </div>
               ))}
